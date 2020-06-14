@@ -46,36 +46,13 @@ function Emotion() {
             const emotions = getEmotions(person);
             const age = person.faceAttributes.age;
             return (
-              <div
-                key={index}
-                style={{
-                  flex: 1,
-                  display: "flex",
-                  overflowX: "scroll",
-                  width: "100%",
-                  justifyContent: "center",
-                }}
-              >
+              <div key={index} style={classes.emotionBar}>
                 <div style={{ display: "flex" }} className="values">
-                  <Value value={age} text={`${age} years`} />
-                  {emotions.map((e) => (
-                    <Value value={e[1]} text={e[0]} />
+                  <Value value={age} text={`${age} years`} key="age" />
+                  {emotions.map((e, index) => (
+                    <Value value={e[1]} text={e[0]} key={index} />
                   ))}
                 </div>
-                {/* <table>
-                  <tbody>
-                    <tr>
-                      <td>Age</td>
-                      <td>{age}</td>
-                    </tr>
-                    {emotions.map((e, index) => (
-                      <tr key={index}>
-                        <td>{e[0]}</td>
-                        <td>{e[1]}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table> */}
               </div>
             );
           })}
@@ -100,5 +77,15 @@ function Value({ value, text }) {
     </div>
   );
 }
+
+const classes = {
+  emotionBar: {
+    flex: 1,
+    display: "flex",
+    overflowX: "scroll",
+    width: "100%",
+    justifyContent: "center",
+  },
+};
 
 export default Emotion;
