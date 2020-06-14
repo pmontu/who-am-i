@@ -67,6 +67,9 @@ def main(req):
         # ML
         res = get_facial_attributes(blob.url)
 
+        # cleanup
+        blob.delete_blob()
+
         return func.HttpResponse(res)
 
     # Error Message
