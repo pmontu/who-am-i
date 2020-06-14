@@ -1,75 +1,41 @@
-import React, { useState } from "react";
-import Camera from "react-html5-camera-photo";
-import "react-html5-camera-photo/build/css/index.css";
-import { postImg } from "./actions";
-import { CircularProgress } from "@material-ui/core/";
-import { BrowserRouter as Router } from "react-router-dom";
+import React from "react";
+import {
+  Switch,
+  Route,
+  BrowserRouter as Router,
+  Redirect,
+} from "react-router-dom";
 import { usePageViews } from "./hooks";
-
-const getEmotions = (person) =>
-  Object.entries(person.faceAttributes.emotion).sort((a, b) => b[1] - a[1]);
+import PageNotFound from "./PageNotFound";
+import Nav from "./Nav";
+import Home from "./Home";
+import About from "./About";
+import Capture from "./Capture";
+import Emotion from "./Emotion";
+import "./App.css";
 
 function App(props) {
-  const [result, setResult] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   usePageViews();
-
-  function handleTakePhoto(dataUri) {
-    setIsLoading(true);
-    postImg(dataUri).then((data) => {
-      setResult(data);
-      setIsLoading(false);
-    });
-  }
 
   return (
     <div style={classes.root}>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <div style={{ flex: 1 }}>
-            <Camera
-              onTakePhoto={(dataUri) => {
-                handleTakePhoto(dataUri);
-              }}
-            />
-          </div>
-          <div>
-            {result.length > 0
-              ? result.map((person, index) => {
-                  const emotions = getEmotions(person);
-                  return (
-                    <div key={index}>
-                      <table>
-                        <tbody>
-                          <tr>
-                            <td>Age</td>
-                            <td>{person.faceAttributes.age}</td>
-                          </tr>
-                          {emotions.map((e, index) => (
-                            <tr key={index}>
-                              <td>{e[0]}</td>
-                              <td>{e[1]}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  );
-                })
-              : "No faces dedetected."}
-          </div>
-        </>
-      )}
-    </div>
-  );
-}
-
-function Loading() {
-  return (
-    <div style={classes.center}>
-      <CircularProgress />
+      <Nav />
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/capture">
+          <Capture />
+        </Route>
+        <Route path="/result">
+          <Emotion />
+        </Route>
+        <Route path="/about">
+          <About />
+        </Route>
+        <Route path="/404" component={PageNotFound} />
+        <Redirect to="/404" />
+      </Switch>
     </div>
   );
 }
@@ -81,14 +47,6 @@ const classes = {
     display: "flex",
     flexDirection: "column",
     position: "fixed",
-  },
-
-  center: {
-    display: "flex",
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
   },
 };
 

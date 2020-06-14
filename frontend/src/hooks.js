@@ -13,3 +13,12 @@ export function usePageViews() {
     }
   }, [location]);
 }
+
+export function useIntialValue() {
+  const location = useLocation();
+  let initialValue = 0;
+  if (location.pathname === "/") initialValue = 0;
+  else if (location.pathname === "/capture") initialValue = 1;
+  else if (location.pathname === "/about") initialValue = 2;
+  return initialValue;
+}
