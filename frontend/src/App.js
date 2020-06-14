@@ -24,7 +24,7 @@ function App(props) {
         <Route exact path="/">
           <Home />
         </Route>
-        <Route path="/capture">
+        <Route path="/face-capture">
           <Capture />
         </Route>
         <Route path="/result">
