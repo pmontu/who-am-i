@@ -5,3 +5,7 @@
   justify-content: center;
   flex-direction: column;
 }
+
+.values div:not(:last-child) {
+  border-right: 5px solid #ddd;
+}

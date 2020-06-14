@@ -5,8 +5,7 @@ import Tab from "@material-ui/core/Tab";
 import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
 import InsertEmoticonRoundedIcon from "@material-ui/icons/InsertEmoticonRounded";
 import GitHubIcon from "@material-ui/icons/GitHub";
-import { useHistory } from "react-router-dom";
-import { useIntialValue } from "./hooks";
+import { useHistory, useLocation } from "react-router-dom";
 
 export default function CenteredTabs() {
   const history = useHistory();
@@ -46,4 +45,14 @@ export default function CenteredTabs() {
       </Tabs>
     </Paper>
   );
+}
+
+function useIntialValue() {
+  const location = useLocation();
+  let val = 0;
+  if (location.pathname === "/") val = 0;
+  else if (location.pathname === "/face-capture") val = 1;
+  else if (location.pathname === "/result") val = 1;
+  else if (location.pathname === "/about") val = 2;
+  return val;
 }
