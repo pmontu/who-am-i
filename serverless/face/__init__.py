@@ -36,6 +36,9 @@ def get_facial_attributes(blob_url):
 
 
 def main(req):
+
+    # return func.HttpResponse('[{"faceId":"6baaa70d-7fcf-4f36-9127-a35c914b28d1","faceRectangle":{"top":340,"left":202,"width":192,"height":139},"faceAttributes":{"age":33.0,"emotion":{"anger":0.0,"contempt":0.0,"disgust":0.0,"fear":0.0,"happiness":0.001,"neutral":0.986,"sadness":0.0,"surprise":0.012}}}]')
+
     b64_img = req.params.get("b64_img")
     if not b64_img:
         try:
